@@ -1,6 +1,6 @@
 class HistoriesController < ApplicationController
   before_action :set_history, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!, except: :index
   # GET /histories
   # GET /histories.json
   def index
@@ -17,14 +17,25 @@ class HistoriesController < ApplicationController
     @history = History.new
   end
 
+
+  def my_history
+    @histories = current_user.histories
+  end
+
   # GET /histories/1/edit
   def edit
+    if  current_user.admin == false
+      if !(@history.user_id == current_user.id)
+        redirect_to histories_url, notice: 'Solo puede modificar Historias Personales.'
+      end
+    end
   end
 
   # POST /histories
   # POST /histories.json
   def create
     @history = History.new(history_params)
+    @history.user_id = current_user.id
 
     respond_to do |format|
       if @history.save
@@ -54,6 +65,12 @@ class HistoriesController < ApplicationController
   # DELETE /histories/1
   # DELETE /histories/1.json
   def destroy
+
+  if  current_user.admin == false
+    if !(@history.user_id == current_user.id )
+      redirect_to histories_url, notice: 'Solo puede Eliminar Historias Personales.'
+    end
+  end
     @history.destroy
     respond_to do |format|
       format.html { redirect_to histories_url, notice: 'History was successfully destroyed.' }

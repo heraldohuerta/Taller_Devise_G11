@@ -9,7 +9,7 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.2'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+# gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
@@ -33,6 +33,12 @@ gem 'jbuilder', '~> 2.5'
 # gems for images
 gem 'carrierwave', '~> 1.0'
 gem 'mini_magick'
+
+gem 'bcrypt', '~> 3.1.7'
+
+gem 'pg', '~> 0.2'
+
+gem 'devise', git: 'https://github.com/plataformatec/devise.git'  
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
